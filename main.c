@@ -13,9 +13,20 @@ Ex
 
 
 #include <stdio.h>
+#include <stdlib.h>
+
+struct Jogador {
+    char nome[50];
+    char simb;
+    int vitorias;
+};
+
+struct Ranking {
+    struct Jogador j[10];
+    int qtd;
+} rankList;
 
 int main() {
-
-
-
+    return 0;
 }
+
