@@ -1,3 +1,5 @@
+#include <stdio.h> 
+
 // Variáveis globais
 char jogo [3][3];
 char jogador1[40], jogador2[40];
