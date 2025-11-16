@@ -7,7 +7,6 @@ char jogador1[40], jogador2[40];
 /*Iniciar a Matriz / Fica a nota, o caracter tem que ser diferente de X e O, 
 pois vao ser usados pelos jogadores, indica espaços vazios*/
 void IniciarMatriz(){
-
 	int i,j;
 	for(i = 0; i < 3; i++){
 		for(j = 0; j < 3; j++){
@@ -19,7 +18,7 @@ void IniciarMatriz(){
 
 //Verifica se a jogada é valida
 int Validacao_Ocupado(char letra){
-	if(letra == 'x' || letra == '0')
+	if(letra == 'X' || letra == 'O')
 		return 1;
 	else
 		return 0;
@@ -37,7 +36,7 @@ int Validacao_Coordenada(int x, int y){
 
 //Verificar se ela é vazia, ou seja, se for diferente de x e 0, ela é vazia
 int PosicaoVazia (int x, int y) {
-	if(jogo [x][y] != 'x' && jogo[x][y] != '0')
+	if(jogo [x][y] != 'X' && jogo[x][y] != 'O')
 		return 1;
 			
 	return 0;
@@ -100,31 +99,76 @@ int GanhouDiagonalSecundaria() {
 }
 
 // Imprimir linha
-void imprimir(){
+void Imprimir(){
     int l, c; // l = linha, c = coluna
-    printf(" 0 1 2\n");
+    printf("\t   0   1   2\n\n");
     for(l = 0; l < 3; l++) {
-        printf("%d ", l);
+        printf("\t%d ", l);
         for(c = 0; c < 3; c++) {
-            if(Validacao_Ocupado(jogo[l][c])){
-                if(c < 2)
-                    printf(" %c |", jogo[l][c]);
-                else 
-                    printf(" %c ", jogo[l][c]);
-            }
-            else{
-                if(c < 2)
-                    printf("   |");
-                else
-                    printf("   ");
-            }
+            if(c < 2)
+                printf(" %c |", jogo[l][c]);
+            else 
+                printf(" %c ", jogo[l][c]);
         }
-        printf("\n\t--------\n");
+		if(l < 2){
+        	printf("\n\t   ---------- \n");
+		}
     }
 }
 
-int main(){
+// Função de jogo
+void Jogar() {
+	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
+	do{
+		do{
+			Imprimir();
+			printf("Digite a coordenada que deseja jogar: ");
+			scanf("%d%d", &x, &y);
+			valida = Validacao_Coordenada(x, y);
+			if(valida == 1)
+				valida += PosicaoVazia(x, y);
+		}while(valida != 2);
+		if(ordem == 1)
+			jogo[x][y] = 'X';
+		else 
+			jogo[x][y] = 'O';
+		jogadas++;
+		ordem++;
+		if(ordem == 3)
+			ordem = 1;
+		ganhou += GanhouLinha();
+		ganhou += GanhouColuna();
+		ganhou += GanhouDiagonalPrincipal();
+		ganhou += GanhouDiagonalSecundaria();
+	}while(ganhou == 0 && jogadas < 9);
+	if(ganhou != 0){
+		Imprimir();
+		if(ordem - 1 == 1)
+			printf("\nParabéns. Você venceu %s\n", jogador1);
+		else
+			printf("\nParabéns. Você venceu %s\n", jogador2);
+	}
+	else
+		printf("\nNinguém venceu...");
+}
 
-printf("Hello World!\n");
-	
+
+
+int main(){
+	// menu
+	int op;
+
+	printf("Jogador 1, digite seu nome: ");
+	fgets(jogador1, 50, stdin);
+	printf("Jogador 2, digite seu nome: ");
+	fgets(jogador2, 50, stdin);
+	do{
+		IniciarMatriz();
+		Jogar();
+		printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+		scanf("%d", &op);
+		//if(op != 1 && op != 2)
+		//	printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+	}while(op == 1);
+
 }
