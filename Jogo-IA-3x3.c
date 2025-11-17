@@ -194,7 +194,7 @@ int main(){
 	printf("\nJogador, digite seu nome: ");
 	fgets(jogador1, 50, stdin);
 	if (strchr(jogador1, '\n') == NULL) {
-        printf("Nome muito longo! Ele sera cortado.\n");
+        printf("Nome muito longo! Ele será cortado.\n");
 		usleep(1000000);
         LimparBuffer();
     }

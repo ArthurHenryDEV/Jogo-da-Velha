@@ -1,8 +1,18 @@
 #include <stdio.h> 
+#include <stdlib.h> // rand e srand
+#include <time.h>   // time
+#include <string.h> // strcpy
+#include <unistd.h>
 
 // Variáveis globais
 char jogo [3][3];
 char jogador1[50], jogador2[50];
+
+// Função para limpar o buffer de entrada
+void LimparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
 
 /*Iniciar a Matriz / Fica a nota, o caracter tem que ser diferente de X e O, 
 pois vao ser usados pelos jogadores, indica espaços vazios*/
@@ -127,6 +137,10 @@ void Jogar() {
 			valida = Validacao_Coordenada(x, y);
 			if(valida == 1)
 				valida += PosicaoVazia(x, y);
+			if(valida != 2){
+				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
+				usleep(1000000);
+			}
 		}while(valida != 2);
 		if(ordem == 1)
 			jogo[x][y] = 'X';
@@ -136,6 +150,7 @@ void Jogar() {
 		ordem++;
 		if(ordem == 3)
 			ordem = 1;
+		ganhou = 0;
 		ganhou += GanhouLinha();
 		ganhou += GanhouColuna();
 		ganhou += GanhouDiagonalPrincipal();
@@ -160,15 +175,43 @@ int main(){
 
 	printf("Jogador 1, digite seu nome: ");
 	fgets(jogador1, 50, stdin);
+	if (strchr(jogador1, '\n') == NULL) {
+        printf("Nome muito longo! Ele sera cortado.\n");
+		usleep(1000000);
+        LimparBuffer();
+    }
+	else {
+        jogador1[strcspn(jogador1, "\n")] = 0;
+    }
 	printf("Jogador 2, digite seu nome: ");
 	fgets(jogador2, 50, stdin);
+	if (strchr(jogador2, '\n') == NULL) {
+        printf("Nome muito longo! Ele será cortado.\n");
+		usleep(1000000);
+        LimparBuffer();
+    }
+	else {
+        jogador2[strcspn(jogador2, "\n")] = 0;
+    }
 	do{
 		IniciarMatriz();
 		Jogar();
 		printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
-		scanf("%d", &op);
-		//if(op != 1 && op != 2)
-		//	printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+		if (scanf("%d", &op) != 1) {
+            LimparBuffer();
+            op = 0;
+        }
+		while(op != 1 && op != 2){
+			printf("Caractere inválido. Tecle '1' para 'Sim' e '2' para 'Não'\n");
+			if (scanf("%d", &op) != 1) {
+                LimparBuffer();
+                op = 0; 
+            }
+		}
 	}while(op == 1);
-
+	if(op == 2){
+		printf("Voltando ao menu...");
+		usleep(1000000);
+	}
+	return 0;
 }
