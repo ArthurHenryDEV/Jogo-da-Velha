@@ -144,9 +144,9 @@ void Jogar() {
 	if(ganhou != 0){
 		Imprimir();
 		if(ordem - 1 == 1)
-			printf("\nParabéns. Você venceu %s\n", jogador1);
+			printf("\nParabéns. Você venceu, %s!\n", jogador1);
 		else
-			printf("\nParabéns. Você venceu %s\n", jogador2);
+			printf("\nParabéns. Você venceu, %s!\n", jogador2);
 	}
 	else
 		printf("\nNinguém venceu...");

@@ -5,7 +5,7 @@
 #include <unistd.h> // usleep
 
 // Variáveis globais
-char jogo [3][3];
+char jogo [4][4];
 char jogador1[50], jogador2[50];
 
 // Função para limpar o buffer de entrada
@@ -18,8 +18,8 @@ void LimparBuffer() {
 pois vao ser usados pelos jogadores, indica espaços vazios*/
 void IniciarMatriz(){
 	int i,j;
-	for(i = 0; i < 3; i++){
-		for(j = 0; j < 3; j++){
+	for(i = 0; i < 4; i++){
+		for(j = 0; j < 4; j++){
 			jogo[i][j] = ' ';
 		}
 	}
@@ -36,8 +36,8 @@ int Validacao_Ocupado(char letra){
 
 //Verifica o lugar jogado é valido, ou seja no espaço 3x3
 int Validacao_Coordenada(int x, int y){
-	if(x >= 0 && x < 3){
-		if(y >= 0 && y <3)
+	if(x >= 0 && x < 4){
+		if(y >= 0 && y <4)
 			return 1; //Verdadeiro, é valido
 	}
 	
@@ -55,12 +55,12 @@ int PosicaoVazia (int x, int y) {
 // Verificar se alguém ganhou o jogo por linha
 int GanhouLinha() {
     int i, j, igual = 1;
-    for(i = 0; i < 3; i++){
-        for(j = 0; j < 2; j++){ 
+    for(i = 0; i < 4; i++){
+        for(j = 0; j < 3; j++){ 
             if(Validacao_Ocupado(jogo[i][j]) && jogo[i][j] == jogo[i][j+1]) // j precisa ser j > 2 porque j > 3 ocasionaria erro. 
                 igual++;
         }
-        if(igual == 3) 
+        if(igual == 4) 
             return 1;
         igual = 1; // inicializar 'igual' novamente para a próxima linha
     }
@@ -70,12 +70,12 @@ int GanhouLinha() {
 // Verificar se alguém ganhou o jogo por coluna
 int GanhouColuna() {
     int i, j, igual = 1;
-    for(i = 0; i < 3; i++) {
-        for(j = 0; j < 2; j++) {
+    for(i = 0; i < 4; i++) {
+        for(j = 0; j < 3; j++) {
             if(Validacao_Ocupado(jogo[j][i]) && jogo[j][i] == jogo[j+1][i])
                 igual++;
         }
-        if(igual == 3)
+        if(igual == 4)
             return 1;
         igual = 1;
     }
@@ -85,11 +85,11 @@ int GanhouColuna() {
 // Verificar vitória pela diagonal principal (esquerda para direita)
 int GanhouDiagonalPrincipal() {
     int i, igual = 1;
-    for(i = 0; i < 2; i++){
+    for(i = 0; i < 3; i++){
         if(Validacao_Ocupado(jogo[i][i]) && jogo[i][i] == jogo[i+1][i+1])
             igual++;
     }
-    if(igual == 3)
+    if(igual == 4)
         return 1;
     else
         return 0;
@@ -98,11 +98,11 @@ int GanhouDiagonalPrincipal() {
 // Verificar vitória pela diagonal secundaria (direita para esquerda)
 int GanhouDiagonalSecundaria() {
     int i, igual = 1;
-    for(i = 0; i < 2; i++){
-        if(Validacao_Ocupado(jogo[i][3-i-1]) && jogo[i][3-i-1] == jogo[i+1][3-i-2])
+    for(i = 0; i < 3; i++){
+        if(Validacao_Ocupado(jogo[i][3-i]) && jogo[i][3-i] == jogo[i+1][3-(i+1)])
             igual++;
     }
-    if(igual == 3)
+    if(igual == 4)
         return 1;
     else
         return 0;
@@ -111,27 +111,28 @@ int GanhouDiagonalSecundaria() {
 // Imprimir linha
 void Imprimir(){
     int l, c; // l = linha, c = coluna
-    printf("\t   0   1   2\n\n");
-    for(l = 0; l < 3; l++) {
+    printf("\t   0   1   2   3\n\n");
+    for(l = 0; l < 4; l++) {
         printf("\t%d ", l);
-        for(c = 0; c < 3; c++) {
-            if(c < 2)
+        for(c = 0; c < 4; c++) {
+            if(c < 3)
                 printf(" %c |", jogo[l][c]);
             else 
                 printf(" %c ", jogo[l][c]);
         }
-		if(l < 2){
-        	printf("\n\t   ---------- \n");
+		if(l < 3){
+        	printf("\n\t   -------------- \n");
 		}
     }
+    printf("\n\n");
 }
 
 // Função da IA
 void JogadaComputador(int *x_ptr, int *y_ptr) {
     int x, y;
     do {
-        x = rand() % 3;  // Sorteia coordenadas (0, 1 ou 2) até achar uma casa vazia
-        y = rand() % 3;  // Mesma coisa pro y
+        x = rand() % 4;  // Sorteia coordenadas (0, 1, 2 ou 3) até achar uma casa vazia
+        y = rand() % 4;  // Mesma coisa pro y
     } while (PosicaoVazia(x, y) == 0);
     // Devolve os valores armazenados em ponteiros para o jogo
     *x_ptr = x;
@@ -173,19 +174,17 @@ void Jogar() {
 		ganhou += GanhouColuna();
 		ganhou += GanhouDiagonalPrincipal();
 		ganhou += GanhouDiagonalSecundaria();
-	}while(ganhou == 0 && jogadas < 9);
+	}while(ganhou == 0 && jogadas < 16);
 	if(ganhou != 0){
 		Imprimir();
 		if(ordem - 1 == 1)
-			printf("\n\nParabéns. Você venceu, %s!\n", jogador1);
+			printf("\n\nParabéns. Você venceu %s!\n", jogador1);
 		else
-			printf("\n\nParabéns. Você venceu, %s!\n\n", jogador2);
+			printf("\n\nParabéns. Você venceu %s!\n\n", jogador2);
 	}
 	else
 		printf("\n\nNinguém venceu...\n");
 }
-
-
 
 int main(){
 	// menu

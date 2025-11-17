@@ -137,6 +137,7 @@ void Jogar() {
 		ordem++;
 		if(ordem == 3)
 			ordem = 1;
+        ganhou = 0;
 		ganhou += GanhouLinha();
 		ganhou += GanhouColuna();
 		ganhou += GanhouDiagonalPrincipal();
@@ -145,9 +146,9 @@ void Jogar() {
 	if(ganhou != 0){
 		Imprimir();
 		if(ordem - 1 == 1)
-			printf("\nParabéns. Você venceu %s\n", jogador1);
+			printf("\nParabéns. Você venceu, %s!\n", jogador1);
 		else
-			printf("\nParabéns. Você venceu %s\n", jogador2);
+			printf("\nParabéns. Você venceu, %s!\n", jogador2);
 	}
 	else
 		printf("\nNinguém venceu...");
