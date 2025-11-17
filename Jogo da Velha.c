@@ -2,7 +2,7 @@
 
 // Variáveis globais
 char jogo [3][3];
-char jogador1[40], jogador2[40];
+char jogador1[50], jogador2[50];
 
 /*Iniciar a Matriz / Fica a nota, o caracter tem que ser diferente de X e O, 
 pois vao ser usados pelos jogadores, indica espaços vazios*/
