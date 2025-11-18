@@ -1,11 +1,15 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h> // rand e srand
+#include <string.h> // strcpy
+#include <unistd.h> // usleep
+#include <time.h>   // time
 
 struct Jogador {
     char nome[50];
     int vitorias;
 };
 
+// atualizar o ranking
 void atualizarRanking(struct Jogador j) {
     struct Jogador lista[100];
     int n = 0, achou = 0, i;
@@ -33,7 +37,7 @@ void atualizarRanking(struct Jogador j) {
         fprintf(f, "%s %d\n", lista[i].nome, lista[i].vitorias);
     fclose(f);
 }
-
+//mostrar o ranking quando solicitado
 void mostrarRanking() {
     FILE *f = fopen("ranking.txt", "r");
     if (!f) {
