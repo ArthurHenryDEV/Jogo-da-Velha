@@ -132,12 +132,17 @@ void Jogar() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
 		do{
-			Imprimir();
-			printf("Digite a coordenada que deseja jogar: ");
-			scanf("%d%d", &x, &y);
-			valida = Validacao_Coordenada(x, y);
-			if(valida == 1)
-				valida += PosicaoVazia(x, y);
+   Imprimir();//
+    printf("Digite a coordenada que deseja jogar: ");
+
+    if (scanf("%d%d", &x, &y) != 2) {
+        LimparBuffer();
+        valida = 0;
+    } else {
+        valida = Validacao_Coordenada(x, y);
+        if(valida == 1)
+            valida += PosicaoVazia(x, y);
+    }
             if(valida != 2){
 				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
 				usleep(1000000);
