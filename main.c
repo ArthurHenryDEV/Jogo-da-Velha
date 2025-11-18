@@ -35,6 +35,7 @@ void limparTela() {
 #endif
 }
 
+// Serve como sleep para pausas
 void Pausar(int segundos) {
 #ifdef _WIN32
     Sleep(segundos * 1000);
@@ -51,14 +52,21 @@ int Validacao_Ocupado(char letra){
 		return 0;
 }
 
-//Verificar se ela é vazia, ou seja, se for diferente de x e 0, ela é vazia
+//Verificar se ela é vazia, ou seja, se for diferente de x e 0, ela é vazia em 3x3
 int PosicaoVazia3X3 (int x, int y) {
 	if(jogo3x3 [x][y] != 'X' && jogo3x3[x][y] != 'O')
 		return 1;
 			
 	return 0;
 }
+//Verificar se ela é vazia, ou seja, se for diferente de x e 0, ela é vazia em 4x4
 
+int PosicaoVazia4X4 (int x, int y) {
+	if(jogo4x4 [x][y] != 'X' && jogo4x4[x][y] != 'O')
+		return 1;
+			
+	return 0;
+}
 	// atualizar o ranking
 	void atualizarRanking(struct Jogador j) {
     struct Jogador lista[100];
@@ -88,13 +96,7 @@ int PosicaoVazia3X3 (int x, int y) {
     fclose(f);
 }
 
-int PosicaoVazia4X4 (int x, int y) {
-	if(jogo4x4 [x][y] != 'X' && jogo4x4[x][y] != 'O')
-		return 1;
-			
-	return 0;
-}
-
+// Inicializacao de matriz 3x3
 void IniciarMatriz3X3(){
 	int i,j;
 	for(i = 0; i < 3; i++){
@@ -105,6 +107,7 @@ void IniciarMatriz3X3(){
 
 }
 
+// Inicializacao de matriz 4x4
 void IniciarMatriz4X4(){
 	int i,j;
 	for(i = 0; i < 4; i++){
@@ -125,6 +128,7 @@ int Validacao_Coordenada3X3(int x, int y){
 	return 0; //Falso, não é valido
 }
 
+//Verifica o lugar jogado é valido, ou seja no espaço 4x4
 int Validacao_Coordenada4X4(int x, int y){
 	if(x >= 0 && x < 4){
 		if(y >= 0 && y <4)
@@ -135,7 +139,7 @@ int Validacao_Coordenada4X4(int x, int y){
 }
 
 
-// Verificar se alguém ganhou o jogo por linha
+// Verificar se alguém ganhou o jogo por linha 3x3
 int GanhouLinha3X3() {
     int i, j, igual = 1;
     for(i = 0; i < 3; i++){
@@ -150,6 +154,7 @@ int GanhouLinha3X3() {
     return 0;
 }
 
+// Verificar se alguém ganhou o jogo por linha 4x4
 int GanhouLinha4X4() {
     int i, j, igual = 1;
     for(i = 0; i < 4; i++){
@@ -164,7 +169,7 @@ int GanhouLinha4X4() {
     return 0;
 }
 
-// Verificar se alguém ganhou o jogo por coluna
+// Verificar se alguém ganhou o jogo por coluna 3x3
 int GanhouColuna3X3() {
     int i, j, igual = 1;
     for(i = 0; i < 3; i++) {
@@ -179,6 +184,7 @@ int GanhouColuna3X3() {
     return 0;
 }
 
+// Verificar se alguém ganhou o jogo por coluna 4x4
 int GanhouColuna4X4() {
     int i, j, igual = 1;
     for(i = 0; i < 4; i++) {
@@ -193,7 +199,7 @@ int GanhouColuna4X4() {
     return 0;
 }
 
-// Verificar vitória pela diagonal principal (esquerda para direita)
+// Verificar vitória pela diagonal principal (esquerda para direita) 3x3
 int GanhouDiagonalPrincipal3X3() {
     int i, igual = 1;
     for(i = 0; i < 2; i++){
@@ -206,6 +212,7 @@ int GanhouDiagonalPrincipal3X3() {
         return 0;
 }
 
+// Verificar vitória pela diagonal principal (esquerda para direita) 4x4
 int GanhouDiagonalPrincipal4X4() {
     int i, igual = 1;
     for(i = 0; i < 3; i++){
@@ -218,7 +225,7 @@ int GanhouDiagonalPrincipal4X4() {
         return 0;
 }
 
-// Verificar vitória pela diagonal secundaria (direita para esquerda)
+// Verificar vitória pela diagonal secundaria (direita para esquerda) 3x3
 int GanhouDiagonalSecundaria3X3() {
     int i, igual = 1;
     for(i = 0; i < 2; i++){
@@ -231,6 +238,7 @@ int GanhouDiagonalSecundaria3X3() {
         return 0;
 }
 
+// Verificar vitória pela diagonal secundaria (direita para esquerda) 4x4
 int GanhouDiagonalSecundaria4X4() {
     int i, igual = 1;
     for(i = 0; i < 3; i++){
@@ -243,7 +251,7 @@ int GanhouDiagonalSecundaria4X4() {
         return 0;
 }
 
-// Imprimir linha
+// Imprimir linha 3x3
 void Imprimir3X3(){
     limparTela();
     int l, c; // l = linha, c = coluna
@@ -262,6 +270,7 @@ void Imprimir3X3(){
     }
 }
 
+// Imprimir linha 4x4
 void Imprimir4X4(){
     limparTela();
     int l, c; // l = linha, c = coluna
@@ -281,7 +290,7 @@ void Imprimir4X4(){
     printf("\n\n");
 }
 
-// Função da IA
+// Função da IA Random 3x3
 void JogadaComputador3X3(int *x_ptr, int *y_ptr) {
     int x, y;
     do {
@@ -292,7 +301,7 @@ void JogadaComputador3X3(int *x_ptr, int *y_ptr) {
     *x_ptr = x;
     *y_ptr = y;
 }
-
+// Função da IA Random 4x4
 void JogadaComputador4X4(int *x_ptr, int *y_ptr) {
     int x, y;
     do {
@@ -303,7 +312,7 @@ void JogadaComputador4X4(int *x_ptr, int *y_ptr) {
     *y_ptr = y;
 }
 
-// Função de jogo
+// Função de jogo 3x3 JXJ
 void Jogar3X3() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
@@ -355,7 +364,7 @@ void Jogar3X3() {
     	printf("\nNinguem venceu...");
 	}
 	
-// Função de jogo para modo JOG X MAQ
+// Função de jogo para modo JOG X MAQ 3X3
 void JogarComputador3X3() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
@@ -413,6 +422,7 @@ void JogarComputador3X3() {
     	printf("\n\nNinguem venceu...\n");
 	}
 
+// Função de jogo 4x4 JXJ
 void Jogar4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
@@ -463,6 +473,8 @@ void Jogar4X4() {
 	else
     	printf("\nNinguem venceu...");
 	}
+
+// Função de jogo para modo JOG X MAQ 4x4
 void JogarComputador4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
@@ -764,10 +776,12 @@ int main(){
             }
 
             Pausar(1);
-
+        // SELETOR RANKING
         }else if (opcao == 3){
             limparTela();    
             mostrarRanking();
+        
+        // CREDITOS
         }else if (opcao == 4){   
             int op = 0;
             do{
