@@ -328,17 +328,17 @@ void Jogar3X3() {
     	Imprimir3X3();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\nParabéns. Você venceu, %s!\n", jogador1);
+        printf("\nParabï¿½ns. Vocï¿½ venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\nParabéns. Você venceu, %s!\n", jogador2);
+        printf("\nParabï¿½ns. Vocï¿½ venceu, %s!\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\nNinguém venceu...");
+    	printf("\nNinguï¿½m venceu...");
 	}
 	
 // FunÃ§Ã£o de jogo para modo JOG X MAQ
@@ -386,17 +386,17 @@ void JogarComputador3X3() {
     	Imprimir3X3();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\n\nParabéns. Você venceu, %s!\n", jogador1);
+        printf("\n\nParabï¿½ns. Vocï¿½ venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\n\nParabéns. Você venceu, %s!\n\n", jogador2);
+        printf("\n\nParabï¿½ns. Vocï¿½ venceu, %s!\n\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\n\nNinguém venceu...\n");
+    	printf("\n\nNinguï¿½m venceu...\n");
 	}
 
 void Jogar4X4() {
@@ -437,17 +437,17 @@ void Jogar4X4() {
     	Imprimir4X4();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\nParabéns. Você venceu, %s!\n", jogador1);
+        printf("\nParabï¿½ns. Vocï¿½ venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\nParabéns. Você venceu, %s!\n", jogador2);
+        printf("\nParabï¿½ns. Vocï¿½ venceu, %s!\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\nNinguém venceu...");
+    	printf("\nNinguï¿½m venceu...");
 	}
 void JogarComputador4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
@@ -493,17 +493,17 @@ void JogarComputador4X4() {
     	Imprimir4X4();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\n\nParabéns. Você venceu %s!\n", jogador1);
+        printf("\n\nParabï¿½ns. Vocï¿½ venceu %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\n\nParabéns. Você venceu %s!\n\n", jogador2);
+        printf("\n\nParabï¿½ns. Vocï¿½ venceu %s!\n\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\n\nNinguém venceu...\n");
+    	printf("\n\nNinguï¿½m venceu...\n");
 	}	
 
 //mostrar o ranking quando solicitado
@@ -537,6 +537,7 @@ int main(){
         printf("1 - JOG x JOG\n");
         printf("2 - JOG x COM\n");
         printf("3 - RANKING\n");
+        printf("4 - CREDITOS\n");
         printf("0 - Sair\n");
         printf("==========================\n");
         printf("Escolha uma opcao: ");
@@ -751,10 +752,27 @@ int main(){
 
             usleep(500000);
 
-         }else if (opcao == 3){
-         	limparTela();    
+        }else if (opcao == 3){
+            limparTela();    
             mostrarRanking();
-
+        }else if (opcao == 4){   
+            int op = 0;
+            do{
+            limparTela();
+            printf("\n===== CREDITOS =====\n");
+            printf("Arthur Henry Dias Paiva\n");
+            usleep(1000000);
+            printf("AbraÃ£o Henrique Franco de AraÃºjo\n");
+            usleep(1000000);
+            printf("Guilherme Marques Andrade MororÃ³\n");
+            usleep(1000000);
+            printf("Enzo Morais Lucena\n");
+            usleep(1000000);
+            printf("Lucas Barbosa Holanda\n\n");
+            printf("Tecle '1' para voltar ao menu: ");
+            scanf("%d", &op);
+            LimparBuffer();
+            }while(op != 1);
         }else if (opcao == 0){
             printf("Saindo do jogo...\n");
 
