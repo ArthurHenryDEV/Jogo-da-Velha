@@ -261,11 +261,16 @@ void Jogar3X3() {
 	do{
 		do{
 			Imprimir3X3();
-			printf("Digite a coordenada que deseja jogar: ");
-			scanf("%d%d", &x, &y);
-			valida = Validacao_Coordenada3X3(x, y);
-			if(valida == 1)
-				valida += PosicaoVazia3X3(x, y);
+			  printf("Digite a coordenada que deseja jogar: ");
+
+    if (scanf("%d%d", &x, &y) != 2) {
+        LimparBuffer();
+        valida = 0;
+    } else {
+        valida = Validacao_Coordenada3X3(x, y);
+        if(valida == 1)
+            valida += PosicaoVazia3X3(x, y);
+    }
 			if(valida != 2){
 				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
 				usleep(1000000);
@@ -303,11 +308,16 @@ void JogarComputador3X3() {
 		if(ordem == 1){
 			do{
 				Imprimir3X3();
-				printf("Digite a coordenada que deseja jogar: ");
-				scanf("%d%d", &x, &y);
-				valida = Validacao_Coordenada3X3(x, y);
-				if(valida == 1)
-					valida += PosicaoVazia3X3(x, y);
+	  printf("Digite a coordenada que deseja jogar: ");
+
+    if (scanf("%d%d", &x, &y) != 2) {
+        LimparBuffer();
+        valida = 0;
+    } else {
+        valida = Validacao_Coordenada3X3(x, y);
+        if(valida == 1)
+            valida += PosicaoVazia3X3(x, y);
+    }
 				if (valida != 2){ // Mensagem de erro
 					printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
 					usleep(1000000);
@@ -349,11 +359,16 @@ void Jogar4X4() {
 	do{
 		do{
 			Imprimir4X4();
-			printf("Digite a coordenada que deseja jogar: ");
-			scanf("%d%d", &x, &y);
-			valida = Validacao_Coordenada4X4(x, y);
-			if(valida == 1)
-				valida += PosicaoVazia4X4(x, y);
+			  printf("Digite a coordenada que deseja jogar: ");
+
+    if (scanf("%d%d", &x, &y) != 2) {
+        LimparBuffer();
+        valida = 0;
+    } else {
+        valida = Validacao_Coordenada4X4(x, y);
+        if(valida == 1)
+            valida += PosicaoVazia4X4(x, y);
+    }
             if(valida != 2){
 				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
 				usleep(1000000);
@@ -390,11 +405,16 @@ void JogarComputador4X4() {
 		if(ordem == 1){
 			do{
 				Imprimir4X4();
-				printf("Digite a coordenada que deseja jogar: ");
-				scanf("%d%d", &x, &y);
-				valida = Validacao_Coordenada4X4(x, y);
-				if(valida == 1)
-					valida += PosicaoVazia4X4(x, y);
+				  printf("Digite a coordenada que deseja jogar: ");
+
+    if (scanf("%d%d", &x, &y) != 2) {
+        LimparBuffer();
+        valida = 0;
+    } else {
+        valida = Validacao_Coordenada4X4(x, y);
+        if(valida == 1)
+            valida += PosicaoVazia4X4(x, y);
+    }
 				if (valida != 2){ // Mensagem de erro
 					printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
 					usleep(1000000);
