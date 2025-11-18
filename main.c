@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h> // rand e srand
 #include <string.h> // strcpy
-#include <unistd.h> // usleep
 #include <time.h>   // time
+#include <stdio.h>
+#include <stdlib.h>
+#ifdef _WIN32
+    #include <windows.h> // Para Windows
+#else
+    #include <unistd.h>  // Para Mac
+#endif
 
 // Variáveis globais e funções 
 char jogo3x3 [3][3];
@@ -26,6 +32,14 @@ void limparTela() {
     system("cls");
 #else
     system("clear");
+#endif
+}
+
+void Pausar(int segundos) {
+#ifdef _WIN32
+    Sleep(segundos * 1000);
+#else
+    sleep(segundos); 
 #endif
 }
 
@@ -306,8 +320,8 @@ void Jogar3X3() {
             valida += PosicaoVazia3X3(x, y);
     }
 			if(valida != 2){
-				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
-				usleep(1000000);
+				printf("\nCoordenada invalida ou ja ocupada. Tente novamente.\n");
+				Pausar(1);
 			}
 		}while(valida != 2);
 		if(ordem == 1)
@@ -328,17 +342,17 @@ void Jogar3X3() {
     	Imprimir3X3();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\nParab�ns. Voc� venceu, %s!\n", jogador1);
+        printf("\nParabens. Voce venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\nParab�ns. Voc� venceu, %s!\n", jogador2);
+        printf("\nParabens. Voce venceu, %s!\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\nNingu�m venceu...");
+    	printf("\nNinguem venceu...");
 	}
 	
 // Função de jogo para modo JOG X MAQ
@@ -359,16 +373,16 @@ void JogarComputador3X3() {
             valida += PosicaoVazia3X3(x, y);
     }
 				if (valida != 2){ // Mensagem de erro
-					printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
-					usleep(1000000);
+					printf("\nCoordenada invalida ou ja ocupada. Tente novamente.\n");
+					Pausar(1);
 				}
 			}while(valida != 2);
 				jogo3x3[x][y] = 'X';
 		}
 		else{ 
 			Imprimir3X3();
-			printf("\nComputador está pensando...\n");
-			usleep(1000000);
+			printf("\nComputador esta pensando...\n");
+			Pausar(1);
 			JogadaComputador3X3(&x, &y);
 			jogo3x3[x][y] = 'O';
 		}
@@ -386,17 +400,17 @@ void JogarComputador3X3() {
     	Imprimir3X3();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\n\nParab�ns. Voc� venceu, %s!\n", jogador1);
+        printf("\n\nParabens. Voce venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\n\nParab�ns. Voc� venceu, %s!\n\n", jogador2);
+        printf("\n\nParabens. Voce venceu, %s!\n\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\n\nNingu�m venceu...\n");
+    	printf("\n\nNinguem venceu...\n");
 	}
 
 void Jogar4X4() {
@@ -415,8 +429,8 @@ void Jogar4X4() {
             valida += PosicaoVazia4X4(x, y);
     }
             if(valida != 2){
-				printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
-				usleep(1000000);
+				printf("\nCoordenada invalida ou ja ocupada. Tente novamente.\n");
+				Pausar(1);
 			}
 		}while(valida != 2);
 		if(ordem == 1)
@@ -437,17 +451,17 @@ void Jogar4X4() {
     	Imprimir4X4();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\nParab�ns. Voc� venceu, %s!\n", jogador1);
+        printf("\nParabens. Voce venceu, %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\nParab�ns. Voc� venceu, %s!\n", jogador2);
+        printf("\nParabens. Voce venceu, %s!\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\nNingu�m venceu...");
+    	printf("\nNinguem venceu...");
 	}
 void JogarComputador4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
@@ -466,16 +480,16 @@ void JogarComputador4X4() {
             valida += PosicaoVazia4X4(x, y);
     }
 				if (valida != 2){ // Mensagem de erro
-					printf("\nCoordenada inválida ou já ocupada. Tente novamente.\n");
-					usleep(1000000);
+					printf("\nCoordenada invalida ou ja ocupada. Tente novamente.\n");
+					Pausar(1);
 				}
 			}while(valida != 2);
 				jogo4x4[x][y] = 'X';
 		}
 		else{ 
 			Imprimir4X4();
-			printf("\nComputador está pensando...\n");
-			usleep(1000000);
+			printf("\nComputador esta pensando...\n");
+			Pausar(1);
 			JogadaComputador4X4(&x, &y);
 			jogo4x4[x][y] = 'O';
 		}
@@ -493,17 +507,17 @@ void JogarComputador4X4() {
     	Imprimir4X4();
     	struct Jogador j;
     	if(ordem - 1 == 1){
-        printf("\n\nParab�ns. Voc� venceu %s!\n", jogador1);
+        printf("\n\nParabens. Voce venceu %s!\n", jogador1);
         strcpy(j.nome, jogador1);
     } else {
-        printf("\n\nParab�ns. Voc� venceu %s!\n\n", jogador2);
+        printf("\n\nParabens. Voce venceu %s!\n\n", jogador2);
         strcpy(j.nome, jogador2);
     }
     j.vitorias = 1;
     atualizarRanking(j);
 	}
 	else
-    	printf("\n\nNingu�m venceu...\n");
+    	printf("\n\nNinguem venceu...\n");
 	}	
 
 //mostrar o ranking quando solicitado
@@ -524,7 +538,6 @@ void mostrarRanking() {
     
     printf("\nPressione ENTER para voltar...");
     getchar();
-    
 }
 
 int main(){
@@ -559,14 +572,14 @@ int main(){
             if (opcaoTabuleiro == 1){
 
                 printf("Iniciando JOGO 3x3 (JOG 1 vs JOG 2)...\n");
-                usleep(100000);
+                Pausar(1);
                 int op;
 
                 printf("Jogador 1, digite seu nome: ");
                 fgets(jogador1, 50, stdin);
                 if (strchr(jogador1, '\n') == NULL) {
                     printf("Nome muito longo! Ele sera cortado.\n");
-                    usleep(1000000);
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
@@ -575,8 +588,8 @@ int main(){
                 printf("Jogador 2, digite seu nome: ");
                 fgets(jogador2, 50, stdin);
                 if (strchr(jogador2, '\n') == NULL) {
-                    printf("Nome muito longo! Ele será cortado.\n");
-                    usleep(1000000);
+                    printf("Nome muito longo! Ele sera cortado.\n");
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
@@ -585,13 +598,13 @@ int main(){
                 do{
                     IniciarMatriz3X3();
                     Jogar3X3();
-                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Nao\n");
                     if (scanf("%d", &op) != 1) {
                         LimparBuffer();
                         op = 0;
                     }
                     while(op != 1 && op != 2){
-                        printf("Caractere inválido. Tecle '1' para 'Sim' e '2' para 'Não'\n");
+                        printf("Caractere invalido. Tecle '1' para 'Sim' e '2' para 'Nao'\n");
                         if (scanf("%d", &op) != 1) {
                             LimparBuffer();
                             op = 0; 
@@ -600,20 +613,20 @@ int main(){
                 }while(op == 1);
                 if(op == 2){
                     printf("Voltando ao menu...\n");
-                    usleep(1000000);
+                    Pausar(1);
                 }
 
             // JOG X JOG 4X4
             }else if (opcaoTabuleiro == 2){
                 printf("Iniciando JOGO 4x4 (JOG 1 vs JOG 2)...\n");
-                usleep(100000);
+                Pausar(1);
                 int op;
 
                 printf("Jogador 1, digite seu nome: ");
                 fgets(jogador1, 50, stdin);
                 if (strchr(jogador1, '\n') == NULL) {
                     printf("Nome muito longo! Ele sera cortado.\n");
-                    usleep(1000000);
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
@@ -622,8 +635,8 @@ int main(){
                 printf("Jogador 2, digite seu nome: ");
                 fgets(jogador2, 50, stdin);
                 if (strchr(jogador2, '\n') == NULL) {
-                    printf("Nome muito longo! Ele será cortado.\n");
-                    usleep(1000000);
+                    printf("Nome muito longo! Ele sera cortado.\n");
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
@@ -632,13 +645,13 @@ int main(){
                 do{
                     IniciarMatriz4X4();
                     Jogar4X4();
-                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Nao\n");
                     if (scanf("%d", &op) != 1) {
                         LimparBuffer();
                         op = 0;
                     }
                     while(op != 1 && op != 2){
-                        printf("Caractere inválido. Tecle '1' para 'Sim' e '2' para 'Não'\n");
+                        printf("Caractere invalido. Tecle '1' para 'Sim' e '2' para 'Nao'\n");
                         if (scanf("%d", &op) != 1) {
                             LimparBuffer();
                             op = 0; 
@@ -647,14 +660,14 @@ int main(){
                 }while(op == 1);
                 if(op == 2){
                     printf("Voltando ao menu...\n");
-                    usleep(1000000);
+                    Pausar(1);
                 }
             }else if (opcaoTabuleiro == 0){
                 printf("Voltando ao menu principal...\n");
             }else{
                 printf("Opcao invalida!\n");
             }
-            usleep(500000);
+            Pausar(1);
 
         // MENU JOG X MAQ
         }else if (opcao == 2){
@@ -670,31 +683,31 @@ int main(){
             // JOG X MAQ 3X3
             if (opcaoTabuleiro == 1){
                 printf("Iniciando JOGO 3x3 (JOG vs COM)...\n");
-                usleep(100000);
+                Pausar(1);
                 int op;
                 printf("\nJogador, digite seu nome: ");
                 fgets(jogador1, 50, stdin);
                 if (strchr(jogador1, '\n') == NULL) {
-                    printf("Nome muito longo! Ele será cortado.\n");
-                    usleep(1000000);
+                    printf("Nome muito longo! Ele sera cortado.\n");
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
                     jogador1[strcspn(jogador1, "\n")] = 0;
                 }
                 strcpy(jogador2, "Computador");
-                printf("\nVocê jogará contra o %s!\n\n", jogador2);
-                usleep(1500000);
+                printf("\nVocê jogara contra o %s!\n\n", jogador2);
+                Pausar(1);
                 do{
                     IniciarMatriz3X3();
                     JogarComputador3X3();
-                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Nao\n");
                     if (scanf("%d", &op) != 1) {
                         LimparBuffer();
                         op = 0;
                     }
                     while(op != 1 && op != 2){
-                        printf("Caractere inválido. Tecle '1' para 'Sim' e '2' para 'Não'\n");
+                        printf("Caractere invalido. Tecle '1' para 'Sim' e '2' para 'Nao'\n");
                         if (scanf("%d", &op) != 1) {
                             LimparBuffer();
                             op = 0; 
@@ -703,37 +716,37 @@ int main(){
                 }while(op == 1);
                 if(op == 2){
                     printf("Voltando ao menu...\n");
-                    usleep(1000000);
+                    Pausar(1);
                 }
 
             // JOG X MAQ 4X4
             }else if (opcaoTabuleiro == 2){
                 printf("Iniciando JOGO 4x4 (JOG vs COM)...\n");
-                usleep(100000);
+                Pausar(1);
                 int op;
                 printf("\nJogador, digite seu nome: ");
                 fgets(jogador1, 50, stdin);
                 if (strchr(jogador1, '\n') == NULL) {
-                    printf("Nome muito longo! Ele será cortado.\n");
-                    usleep(1000000);
+                    printf("Nome muito longo! Ele sera cortado.\n");
+                    Pausar(1);
                     LimparBuffer();
                 }
                 else {
                     jogador1[strcspn(jogador1, "\n")] = 0;
                 }
                 strcpy(jogador2, "Computador");
-                printf("\nVocê jogará contra o %s!\n\n", jogador2);
-                usleep(1500000);
+                printf("\nVocê jogara contra o %s!\n\n", jogador2);
+                Pausar(1);
                 do{
                     IniciarMatriz4X4();
                     JogarComputador4X4();
-                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Não\n");
+                    printf("Deseja jogar novamente? \n1 - Sim\n2 - Nao\n");
                     if (scanf("%d", &op) != 1) {
                         LimparBuffer();
                         op = 0;
                     }
                     while(op != 1 && op != 2){
-                        printf("Caractere inválido. Tecle '1' para 'Sim' e '2' para 'Não'\n");
+                        printf("Caractere invalido. Tecle '1' para 'Sim' e '2' para 'Nao'\n");
                         if (scanf("%d", &op) != 1) {
                             LimparBuffer();
                             op = 0; 
@@ -742,7 +755,7 @@ int main(){
                 }while(op == 1);
                 if(op == 2){
                     printf("Voltando ao menu...\n");
-                    usleep(1000000);
+                    Pausar(1);
                 }
             }else if (opcaoTabuleiro == 0){
                 printf("Voltando ao menu principal...\n");
@@ -750,7 +763,7 @@ int main(){
                 printf("Opcao invalida!\n");
             }
 
-            usleep(500000);
+            Pausar(1);
 
         }else if (opcao == 3){
             limparTela();    
@@ -759,16 +772,26 @@ int main(){
             int op = 0;
             do{
             limparTela();
-            printf("\n===== CREDITOS =====\n");
+            printf("\n===== CREDITOS =====\n\n");
+            Pausar(1);
+            printf("- JOGOS DA VELHA -\n\n");
+            Pausar(1);
             printf("Arthur Henry Dias Paiva\n");
-            usleep(1000000);
-            printf("Abraão Henrique Franco de Araújo\n");
-            usleep(1000000);
-            printf("Guilherme Marques Andrade Mororó\n");
-            usleep(1000000);
-            printf("Enzo Morais Lucena\n");
-            usleep(1000000);
+            
+            printf("Guilherme Marques Andrade Mororo\n\n");
+            Pausar(2);
+            printf("- RANKING -\n\n");
+            Pausar(1);
+            printf("Abraao Henrique Franco de Araujo\n");
+            
+            printf("Enzo Morais Lucena\n\n");
+            Pausar(2);
+            printf("- MENU E DOCUMENTACAO -\n\n");
+            Pausar(1);
             printf("Lucas Barbosa Holanda\n\n");
+            Pausar(2);
+            printf("=========================\n\n");
+            Pausar(1);
             printf("Tecle '1' para voltar ao menu: ");
             scanf("%d", &op);
             LimparBuffer();
@@ -778,7 +801,7 @@ int main(){
 
         }else{
             printf("Opcao invalida! Tente novamente.\n");
-            usleep(500000);
+            Pausar(1);
         }
 
     }while (opcao != 0);
