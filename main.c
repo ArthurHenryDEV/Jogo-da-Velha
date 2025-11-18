@@ -9,6 +9,11 @@ char jogo3x3 [3][3];
 char jogo4x4 [4][4];
 char jogador1[50], jogador2[50];
 
+struct Jogador {
+    char nome[50];
+    int vitorias;
+};
+
 // Fun√ß√£o para limpar o buffer de entrada
 void LimparBuffer() {
     int c;
@@ -38,6 +43,35 @@ int PosicaoVazia3X3 (int x, int y) {
 		return 1;
 			
 	return 0;
+}
+
+	// atualizar o ranking
+	void atualizarRanking(struct Jogador j) {
+    struct Jogador lista[100];
+    int n = 0, achou = 0, i;
+    FILE *f = fopen("ranking.txt", "r");
+
+    if (f) {
+        while (fscanf(f, "%49s %d", lista[n].nome, &lista[n].vitorias) == 2)
+            n++;
+        fclose(f);
+    }
+
+    for (i = 0; i < n; i++) {
+        if (strcmp(lista[i].nome, j.nome) == 0) {
+            lista[i].vitorias += j.vitorias;
+            achou = 1;
+            break;
+        }
+    }
+
+    if (!achou)
+        lista[n++] = j;
+
+    f = fopen("ranking.txt", "w");
+    for (i = 0; i < n; i++)
+        fprintf(f, "%s %d\n", lista[i].nome, lista[i].vitorias);
+    fclose(f);
 }
 
 int PosicaoVazia4X4 (int x, int y) {
@@ -291,16 +325,22 @@ void Jogar3X3() {
 		ganhou += GanhouDiagonalSecundaria3X3();
 	}while(ganhou == 0 && jogadas < 9);
 	if(ganhou != 0){
-		Imprimir3X3();
-		if(ordem - 1 == 1)
-			printf("\nParab√©ns. Voc√™ venceu, %s!\n", jogador1);
-		else
-			printf("\nParab√©ns. Voc√™ venceu, %s!\n", jogador2);
+    	Imprimir3X3();
+    	struct Jogador j;
+    	if(ordem - 1 == 1){
+        printf("\nParabÈns. VocÍ venceu, %s!\n", jogador1);
+        strcpy(j.nome, jogador1);
+    } else {
+        printf("\nParabÈns. VocÍ venceu, %s!\n", jogador2);
+        strcpy(j.nome, jogador2);
+    }
+    j.vitorias = 1;
+    atualizarRanking(j);
 	}
 	else
-		printf("\nNingu√©m venceu...");
-}
-
+    	printf("\nNinguÈm venceu...");
+	}
+	
 // Fun√ß√£o de jogo para modo JOG X MAQ
 void JogarComputador3X3() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
@@ -343,16 +383,21 @@ void JogarComputador3X3() {
 		ganhou += GanhouDiagonalSecundaria3X3();
 	}while(ganhou == 0 && jogadas < 9);
 	if(ganhou != 0){
-		Imprimir3X3();
-		if(ordem - 1 == 1)
-			printf("\n\nParab√©ns. Voc√™ venceu, %s!\n", jogador1);
-		else
-			printf("\n\nParab√©ns. Voc√™ venceu, %s!\n\n", jogador2);
+    	Imprimir3X3();
+    	struct Jogador j;
+    	if(ordem - 1 == 1){
+        printf("\n\nParabÈns. VocÍ venceu, %s!\n", jogador1);
+        strcpy(j.nome, jogador1);
+    } else {
+        printf("\n\nParabÈns. VocÍ venceu, %s!\n\n", jogador2);
+        strcpy(j.nome, jogador2);
+    }
+    j.vitorias = 1;
+    atualizarRanking(j);
 	}
 	else
-		printf("\n\nNingu√©m venceu...\n");
-}
-
+    	printf("\n\nNinguÈm venceu...\n");
+	}
 
 void Jogar4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
@@ -389,16 +434,21 @@ void Jogar4X4() {
 		ganhou += GanhouDiagonalSecundaria4X4();
 	}while(ganhou == 0 && jogadas < 16);
 	if(ganhou != 0){
-		Imprimir4X4();
-		if(ordem - 1 == 1)
-			printf("\nParab√©ns. Voc√™ venceu, %s!\n", jogador1);
-		else
-			printf("\nParab√©ns. Voc√™ venceu, %s!\n", jogador2);
+    	Imprimir4X4();
+    	struct Jogador j;
+    	if(ordem - 1 == 1){
+        printf("\nParabÈns. VocÍ venceu, %s!\n", jogador1);
+        strcpy(j.nome, jogador1);
+    } else {
+        printf("\nParabÈns. VocÍ venceu, %s!\n", jogador2);
+        strcpy(j.nome, jogador2);
+    }
+    j.vitorias = 1;
+    atualizarRanking(j);
 	}
 	else
-		printf("\nNingu√©m venceu...");
-}
-
+    	printf("\nNinguÈm venceu...");
+	}
 void JogarComputador4X4() {
 	int x, y, valida, jogadas = 0, ordem = 1, ganhou = 0;
 	do{
@@ -440,27 +490,42 @@ void JogarComputador4X4() {
 		ganhou += GanhouDiagonalSecundaria4X4();
 	}while(ganhou == 0 && jogadas < 16);
 	if(ganhou != 0){
-		Imprimir4X4();
-		if(ordem - 1 == 1)
-			printf("\n\nParab√©ns. Voc√™ venceu %s!\n", jogador1);
-		else
-			printf("\n\nParab√©ns. Voc√™ venceu %s!\n\n", jogador2);
+    	Imprimir4X4();
+    	struct Jogador j;
+    	if(ordem - 1 == 1){
+        printf("\n\nParabÈns. VocÍ venceu %s!\n", jogador1);
+        strcpy(j.nome, jogador1);
+    } else {
+        printf("\n\nParabÈns. VocÍ venceu %s!\n\n", jogador2);
+        strcpy(j.nome, jogador2);
+    }
+    j.vitorias = 1;
+    atualizarRanking(j);
 	}
 	else
-		printf("\n\nNingu√©m venceu...\n");
-}
+    	printf("\n\nNinguÈm venceu...\n");
+	}	
 
-struct Jogador {
+//mostrar o ranking quando solicitado
+void mostrarRanking() {
+    FILE *f = fopen("ranking.txt", "r");
+    if (!f) {
+        printf("\nNenhum ranking salvo ainda.\n");
+        printf("\nPressione ENTER para voltar...");
+        getchar();
+        return;
+    }
+    printf("\n=== RANKING ===\n");
     char nome[50];
-    char simb;
-    int vitorias;
-};
-
-struct Ranking {
-    struct Jogador j[10];
-    int qtd;
-} rankList;
-
+    int v;
+    while (fscanf(f, "%49s %d", nome, &v) == 2)
+        printf("%s - %d vitorias\n", nome, v);
+    fclose(f);
+    
+    printf("\nPressione ENTER para voltar...");
+    getchar();
+    
+}
 
 int main(){
     int opcao, opcaoTabuleiro;
@@ -687,8 +752,8 @@ int main(){
             usleep(500000);
 
          }else if (opcao == 3){
-            printf("Simulando Ranking..\n");
-            usleep(1000000);      
+         	limparTela();    
+            mostrarRanking();
 
         }else if (opcao == 0){
             printf("Saindo do jogo...\n");
@@ -702,4 +767,3 @@ int main(){
 
     return 0;
     }
-
